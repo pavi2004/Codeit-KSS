@@ -1,0 +1,96 @@
+Reverse a stack without using extra space in O(n)
+Reverse a Stack without using recursion and extra space. Even the functional Stack is not allowed.
+Examples:
+Input : 1->2->3->4
+Output : 4->3->2->1
+Input :  6->5->4
+Output : 4->5->6
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Code:
+import java.util.*;
+public class ReverseStack
+{
+      class Stack
+      {
+          int data;
+          Stack next;
+          Stack(int data)
+          {
+              this.data=data;
+              this.next=null;
+          }
+      }
+      Stack top=null;
+
+      void push(int data)
+      {
+          if(this.top==null)
+          {
+              top=new Stack(data);
+          }
+          else
+          {
+              Stack s=new Stack(data);
+              Stack node = this.top;
+              while(node.next!=null)
+              {
+                  node = node.next;
+              }
+              node.next = s;
+          }
+      }
+
+      Stack pop()
+      {
+          Stack s=this.top;
+          this.top=this.top.next;
+          return s;
+      }
+
+      void print()
+      {
+          if(this.top==null)
+              return;
+          Stack curr=this.top;
+          while(curr.next!=null)
+          {
+              System.out.print(curr.data+"->");
+              curr=curr.next;
+          }
+          System.out.println(curr.data);
+      }
+
+      void reverse()
+      {
+          Stack curr;
+          Stack prev,nxt;
+          curr=prev=this.top;
+          curr=curr.next;
+          prev.next=null;
+
+          while(curr!=null)
+          {
+              nxt=curr.next;
+              curr.next=prev;
+              prev=curr;
+              curr=nxt;
+          }
+          this.top=prev;
+      }
+
+      public static void main(String args[])
+      {
+          Scanner sc=new Scanner(System.in);
+          int n=sc.nextInt();
+          ReverseStack rs=new ReverseStack();
+          for(int i=0;i<n;i++)
+          {
+              rs.push(sc.nextInt());
+          }
+          rs.print();
+          rs.reverse();
+          rs.print();
+      }
+}
